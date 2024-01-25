@@ -16,5 +16,5 @@ const likeSchema = new mongoose.Schema({
     required: true
   }
 })
-const Like = mongoose.model('Like', likeSchema)
-export default Like
+const Likes = mongoose.model('Like', likeSchema)
+export default Likes
