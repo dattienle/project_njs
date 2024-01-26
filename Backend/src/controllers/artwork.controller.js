@@ -39,7 +39,7 @@ export const deleteArtworkController = async (req, res) => {
         if (!artwork) {
             return res.status(404).json({ message: "Artwork with id: " + artworkId + "not found" });
         }
-        res.status(200).json();
+        res.status(200).json("Deleted artwork with id: " + artworkId + " successfully");
     } catch(error) {
         res.status(400).json({ message: error.message });
     }
