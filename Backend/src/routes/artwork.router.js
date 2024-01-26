@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { getAllArtworks } from "../controllers/artwork.controller.js";
+import { createArtworkController, deleteArtworkController, getAllArtworksController, getArtworkByIdController, updateArtworkController } from "../controllers/artwork.controller.js";
 
 const artworkRouters = Router();
 
-artworkRouters.get("/", getAllArtworks)
-
+artworkRouters.get("/", getAllArtworksController)
+artworkRouters.get("/:id", getArtworkByIdController)
+artworkRouters.post("/", createArtworkController)
+artworkRouters.delete("/:id", deleteArtworkController)
+artworkRouters.put("/:id",updateArtworkController)
 export default artworkRouters
