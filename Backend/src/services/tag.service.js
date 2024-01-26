@@ -2,16 +2,16 @@ import Tag from "../model/schema/tag.schema.js";
 
 class TagService {
     async createTag(tagData) {
-        try{
+        try {
             const tag = await Tag.create(tagData);
             return tag;
-        }catch (err) {
+        } catch (err) {
             throw new Error(err.message);
-        } 
+        }
     }
 
     async findAllTags() {
-        try{
+        try {
             const tag = await Tag.find();
             return tag;
         } catch (err) {
@@ -39,7 +39,7 @@ class TagService {
 
     async deleteTag(tagId) {
         try {
-             await Tag.findByIdAndDelete(tagId);
+            await Tag.findByIdAndDelete(tagId);
             return "Tag deleted successfully";
         } catch (err) {
             throw new Error(err.message);

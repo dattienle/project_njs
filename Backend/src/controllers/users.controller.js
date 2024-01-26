@@ -12,10 +12,10 @@ export const loginController = async (req, res) => {
 }
 export const signupController = async (req, res) => {
   const { username, email, password } = req.body
-  try{
-const user = await userService.signup(username, email, password)
-res.status(200).json(user)
-  }catch(error){
-    res.status(400).json({message: error.message})
-  } 
+  try {
+    const user = await userService.signup(username, email, password)
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
 }
