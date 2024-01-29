@@ -5,6 +5,8 @@ import { signToken } from '../utils/jwt.js';
 import RefreshToken from '../model/schema/refreshToken.schema.js';
 import { hashPassword } from '../utils/crypto.js';
 import mongoose from 'mongoose';
+
+
 class UserService {
   signAccessToken({userId}) {
     return signToken({
@@ -85,12 +87,15 @@ class UserService {
       throw error;
     }
   }   
-  async logout(refresh_token){
+ 
+  
+  async logout(refresh_token,access_token){
     console.log(refresh_token)
     try {
         const result = await RefreshToken.deleteOne({ token: refresh_token });
         if (result.deletedCount === 1) {
             console.log('Refresh token deleted successfully.');
+          
             return { message: 'Logout success' };
         } else {
             console.log('Refresh token not found or not deleted.');

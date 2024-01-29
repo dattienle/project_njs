@@ -12,7 +12,7 @@ usersRouter.post('/register',registerValidator ,validateMiddleware, registerCont
 
 usersRouter.post('/logout',accesTokenValidator, refreshTokenValidator,validateMiddleware,logoutController);
 
-usersRouter.get('/me',accesTokenValidator,validateMiddleware, getUserProfileController)
-usersRouter.delete('/admin/:userId',accesTokenValidator,validateMiddleware, deleteUserProfileController)
-usersRouter.patch('/me',accesTokenValidator,updateMeValidator,validateMiddleware, updateMeController)
+usersRouter.get('/me',accesTokenValidator,refreshTokenValidator,validateMiddleware, getUserProfileController)
+usersRouter.delete('/admin/:userId',accesTokenValidator,refreshTokenValidator,validateMiddleware, deleteUserProfileController)
+usersRouter.patch('/me',accesTokenValidator,refreshTokenValidator,updateMeValidator,validateMiddleware, updateMeController)
 export default usersRouter

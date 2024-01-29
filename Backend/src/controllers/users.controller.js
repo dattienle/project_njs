@@ -39,6 +39,8 @@ export const getUserProfileController = async (req, res) => {
   // console.log(req.decodedAuthorization)
   
   try{
+    const { refresh_token } = req.body
+    console.log(refresh_token)
     const  {userId} = req.decodedAuthorization
     const user = await userService.getUserProfile(userId)
     res.status(200).json(user)
@@ -50,6 +52,7 @@ export const deleteUserProfileController = async (req, res) => {
 
 
   try {
+    const { refresh_token } = req.body
     const { userId } = req.decodedAuthorization;
     const { userId: paramUserId  } = req.params;
   
@@ -75,6 +78,7 @@ export const deleteUserProfileController = async (req, res) => {
 export const updateMeController = async (req, res) => {
 
  try{
+  const { refresh_token } = req.body
   const { userId } = req.decodedAuthorization;
   const {body} = req;
   const user = await userService.updateMe(userId, body)

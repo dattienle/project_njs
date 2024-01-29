@@ -74,6 +74,8 @@ isLength: {
   options: { min: 6 },
 },
 }
+
+
 export const loginValidator = checkSchema({
   email:{
     isEmail: {
@@ -163,21 +165,18 @@ export const accesTokenValidator = checkSchema({
   Authorization: {
     custom: {
       options: async (value, { req }) => {
-      console.log("qua day r")
-
         const accessToken = (value || '').split(' ')[1];
         if(!accessToken){
           throw new Error('Access token is required')
-          
         }
         try {
+       
           const decoded_authorization = await verifyToken({
             token: accessToken,
             secretOrPublicKey: process.env.JWT_SECRET_ACCESS_TOKEN,
           });
           req.decodedAuthorization = decoded_authorization;
-          console.log(decoded_authorization)
-          console.log(req.decodedAuthorization)
+
           return true;
         } catch (error) {
           throw new Error('Invalid access token');
