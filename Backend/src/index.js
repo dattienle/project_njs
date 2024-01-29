@@ -15,10 +15,6 @@ app.use('/api/notifications', notificationRouter);
 
 mongoose.connect('mongodb+srv://datltse160245:letiendat2002@sdn301m.a5pjj2z.mongodb.net/njs', { useNewUrlParser: true, useUnifiedTopology: true });
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-  })
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
