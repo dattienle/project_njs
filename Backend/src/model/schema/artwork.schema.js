@@ -47,8 +47,12 @@ const artworkSchema = new mongoose.Schema({
       ref: 'Categories',
       required: true
     }
-  ]
+  ],
+  price: {
+    type: Number,
+    required: true
+  },
 })
 
-const Artwork = mongoose.model('Artwork', artworkSchema)
+const Artwork = mongoose.model('artwork', artworkSchema)
 export default Artwork
