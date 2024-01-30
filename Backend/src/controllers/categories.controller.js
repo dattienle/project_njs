@@ -12,11 +12,11 @@ export const getAllCategories = async (req, res) => {
 export const getCategoryById = async (req, res) => {
   const { categoryId } = req.params;
   try {
-    const category = await category.findById(categoryId);
+    const category = await Categories.findById(categoryId);
     if (!category) {
       return res.status(404).json({ error: 'Category not found' });
     }
-    res.json(category);
+    res.status(201).json(category);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

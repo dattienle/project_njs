@@ -1,4 +1,5 @@
 import Notification from '../model/schema/notification.schema.js';
+import mongoose from 'mongoose';
 
 export const getAllNotifications = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ export const getAllNotifications = async (req, res) => {
 export const getNotificationById = async (req, res) => {
   const { notificationId } = req.params;
   try {
-    const notification = await notification.findById(notificationId);
+    const notification = await Notification.findById(notificationId);
     if (!notification) {
       return res.status(404).json({ error: 'Notification not found' });
     }
@@ -24,7 +25,12 @@ export const getNotificationById = async (req, res) => {
 
 export const createNotification = async (req, res) => {
   const { user_id, content, type, date } = req.body;
-  
+  if (!mongoose.Types.ObjectId.isValid(user_id)) {
+    return res.status(400).json({ error: 'Invalid user_id' });
+  }
+  if (!type || !date) {
+    return res.status(400).json({ error: 'Type and date are required' });
+  }
   try {
     const newNotification = new Notification({ user_id, content, type, date });
     const savedNotification = await newNotification.save();
