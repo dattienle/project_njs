@@ -20,5 +20,5 @@ const notificationSchema = new mongoose.Schema({
     required: true
   }
 })
-const Notification = mongoose.model('Notification', notificationSchema)
+const Notification = mongoose.model('notification', notificationSchema)
 export default Notification

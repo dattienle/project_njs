@@ -1,4 +1,4 @@
-import Notification from "../services/notification.services.js"
+import Notification from '../model/schema/notification.schema.js';
 
 export const getAllNotifications = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ export const getAllNotifications = async (req, res) => {
 export const getNotificationById = async (req, res) => {
   const { notificationId } = req.params;
   try {
-    const notification = await Notification.findById(notificationId);
+    const notification = await notification.findById(notificationId);
     if (!notification) {
       return res.status(404).json({ error: 'Notification not found' });
     }
@@ -24,6 +24,7 @@ export const getNotificationById = async (req, res) => {
 
 export const createNotification = async (req, res) => {
   const { user_id, content, type, date } = req.body;
+  
   try {
     const newNotification = new Notification({ user_id, content, type, date });
     const savedNotification = await newNotification.save();

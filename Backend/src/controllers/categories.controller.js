@@ -1,4 +1,4 @@
-import Categories from "../services/categories.services.js"
+import Categories from '../model/schema/categories.schema.js';
 
 export const getAllCategories = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ export const getAllCategories = async (req, res) => {
 export const getCategoryById = async (req, res) => {
   const { categoryId } = req.params;
   try {
-    const category = await Categories.findById(categoryId);
+    const category = await category.findById(categoryId);
     if (!category) {
       return res.status(404).json({ error: 'Category not found' });
     }
@@ -24,6 +24,9 @@ export const getCategoryById = async (req, res) => {
 
 export const createCategory = async (req, res) => {
   const { name, artwork_ids } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
   try {
     const newCategory = new Categories({ name, artwork_ids });
     const savedCategory = await newCategory.save();
@@ -45,7 +48,7 @@ export const updateCategory = async (req, res) => {
     if (!updatedCategory) {
       return res.status(404).json({ error: 'Category not found' });
     }
-    res.json(updatedCategory);
+    res.status(201).json(updatedCategory);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

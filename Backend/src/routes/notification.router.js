@@ -10,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.get('/notifications', getAllNotifications);
-router.get('/notifications/:notificationId', getNotificationById);
-router.post('/notifications', createNotification);
-router.put('/notifications/:notificationId', updateNotification);
-router.delete('/notifications/:notificationId', deleteNotification);
+router.get('/Getnotifications', getAllNotifications);
+router.get('/Getnotifications/:notificationId', getNotificationById);
+router.post('/Addnotifications', createNotification);
+router.put('/Updatenotifications/:notificationId', updateNotification);
+router.delete('/Deletenotifications/:notificationId', deleteNotification);
 
 export default router;
