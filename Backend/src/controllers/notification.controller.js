@@ -1,8 +1,12 @@
 import Notification from '../model/schema/notification.schema.js';
 import mongoose from 'mongoose';
+import { verifyToken } from '../utils/jwt.js';
 
 export const getAllNotifications = async (req, res) => {
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+
     const notifications = await Notification.find();
     res.json(notifications);
   } catch (error) {
@@ -13,6 +17,9 @@ export const getAllNotifications = async (req, res) => {
 export const getNotificationById = async (req, res) => {
   const { notificationId } = req.params;
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+
     const notification = await Notification.findById(notificationId);
     if (!notification) {
       return res.status(404).json({ error: 'Notification not found' });
@@ -32,6 +39,9 @@ export const createNotification = async (req, res) => {
     return res.status(400).json({ error: 'Type and date are required' });
   }
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+
     const newNotification = new Notification({ user_id, content, type, date });
     const savedNotification = await newNotification.save();
     res.status(201).json(savedNotification);
@@ -44,6 +54,9 @@ export const updateNotification = async (req, res) => {
   const { notificationId } = req.params;
   const { user_id, content, type, date } = req.body;
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+
     const updatedNotification = await Notification.findByIdAndUpdate(
       notificationId,
       { user_id, content, type, date },
@@ -61,6 +74,9 @@ export const updateNotification = async (req, res) => {
 export const deleteNotification = async (req, res) => {
   const { notificationId } = req.params;
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+
     const deletedNotification = await Notification.findByIdAndDelete(notificationId);
     if (!deletedNotification) {
       return res.status(404).json({ error: 'Notification not found' });
