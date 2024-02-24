@@ -1,5 +1,6 @@
-import express from 'express';
-
+import { Router } from 'express';
+import { accessTokenValidator, refreshTokenValidator } from '../middlewares/categories.middleware.js';
+import { validateMiddleware } from '../middlewares/validate.middlewares.js';
 import {
   getAllCategories,
   getCategoryById,
@@ -8,12 +9,12 @@ import {
   deleteCategory,
 } from '../controllers/categories.controller.js';
 
-const router = express.Router();
+const categoriesRouter = Router();
 
-router.get('/Getcategories', getAllCategories);
-router.get('/Getcategories/:categoryId', getCategoryById);
-router.post('/Addcategories', createCategory);
-router.put('/Updatecategories/:categoryId', updateCategory);
-router.delete('/Detelecategories/:categoryId', deleteCategory);
+categoriesRouter.get('/', accessTokenValidator, refreshTokenValidator, validateMiddleware, getAllCategories);
+categoriesRouter.get('/:categoryId', accessTokenValidator, refreshTokenValidator, validateMiddleware, getCategoryById);
+categoriesRouter.post('/', accessTokenValidator, refreshTokenValidator, validateMiddleware, createCategory);
+categoriesRouter.put('/:categoryId', accessTokenValidator, refreshTokenValidator, validateMiddleware, updateCategory);
+categoriesRouter.delete('/:categoryId', accessTokenValidator, refreshTokenValidator, validateMiddleware, deleteCategory);
 
-export default router;
+export default categoriesRouter;
