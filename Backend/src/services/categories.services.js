@@ -4,7 +4,7 @@ import { verifyToken } from '../utils/jwt.js';
 class CategoryService {
   async getAllCategories(token) {
     try {
-      const decodedToken = await verifyToken(token);
+      await verifyToken(token); 
 
       const categories = await Categories.find();
       return categories;
@@ -15,7 +15,7 @@ class CategoryService {
 
   async getCategoryById(categoryId, token) {
     try {
-      const decodedToken = await verifyToken(token);
+      await verifyToken(token); 
 
       const category = await Categories.findById(categoryId);
       if (!category) {
@@ -29,12 +29,8 @@ class CategoryService {
 
   async createCategory(categoryData, token) {
     try {
-      const decodedToken = await verifyToken(token);
+      await verifyToken(token); 
       
-      if (!decodedToken || !decodedToken.userId) {
-        throw new Error('Unauthorized: Invalid token');
-      }
-
       const newCategory = new Categories(categoryData);
       const savedCategory = await newCategory.save();
       return savedCategory;
@@ -45,12 +41,8 @@ class CategoryService {
 
   async updateCategory(categoryId, categoryData, token) {
     try {
-      const decodedToken = await verifyToken(token);
+      await verifyToken(token);
       
-      if (!decodedToken || !decodedToken.userId) {
-        throw new Error('Unauthorized: Invalid token');
-      }
-
       const updatedCategory = await Categories.findByIdAndUpdate(
         categoryId,
         categoryData,
@@ -67,12 +59,8 @@ class CategoryService {
 
   async deleteCategory(categoryId, token) {
     try {
-      const decodedToken = await verifyToken(token);
+      await verifyToken(token); 
       
-      if (!decodedToken || !decodedToken.userId) {
-        throw new Error('Unauthorized: Invalid token');
-      }
-
       const deletedCategory = await Categories.findByIdAndDelete(categoryId);
       if (!deletedCategory) {
         throw new Error('Category not found');

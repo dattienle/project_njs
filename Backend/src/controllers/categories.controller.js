@@ -1,15 +1,15 @@
-import Categories from '../model/schema/categories.schema.js';
-import { verifyToken } from '../utils/jwt.js';
+import categoryService from "../services/categories.services.js";
+import { verifyToken } from "../utils/jwt.js";
 
 export const getAllCategories = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+    await verifyToken(token); 
 
-    const categories = await Categories.find();
-    res.json(categories);
+    const categories = await categoryService.getAllCategories();
+    res.status(200).json(categories);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -17,53 +17,42 @@ export const getCategoryById = async (req, res) => {
   const { categoryId } = req.params;
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+    await verifyToken(token); 
 
-    const category = await Categories.findById(categoryId);
+    const category = await categoryService.getCategoryById(categoryId);
     if (!category) {
       return res.status(404).json({ error: 'Category not found' });
     }
-    res.status(201).json(category);
+    res.status(200).json(category);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const createCategory = async (req, res) => {
-  const { name, artwork_ids } = req.body;
-  if (!name) {
-    return res.status(400).json({ error: 'Name is required' });
-  }
+  const { name, description } = req.body;
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+    await verifyToken(token); 
 
-    const newCategory = new Categories({ name, artwork_ids });
-    const savedCategory = await newCategory.save();
-    res.status(201).json(savedCategory);
+    const newCategory = await categoryService.createCategory({ name, description });
+    res.status(201).json(newCategory);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
 export const updateCategory = async (req, res) => {
   const { categoryId } = req.params;
-  const { name, artwork_ids } = req.body;
+  const { name, description } = req.body;
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+    await verifyToken(token); 
 
-    const updatedCategory = await Categories.findByIdAndUpdate(
-      categoryId,
-      { name, artwork_ids },
-      { new: true }
-    );
-    if (!updatedCategory) {
-      return res.status(404).json({ error: 'Category not found' });
-    }
-    res.status(201).json(updatedCategory);
+    const updatedCategory = await categoryService.updateCategory(categoryId, { name, description });
+    res.status(200).json(updatedCategory);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -71,14 +60,11 @@ export const deleteCategory = async (req, res) => {
   const { categoryId } = req.params;
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = await verifyToken({ token, secretOrPublicKey: process.env.JWT_SECRET });
+    await verifyToken(token); 
 
-    const deletedCategory = await Categories.findByIdAndDelete(categoryId);
-    if (!deletedCategory) {
-      return res.status(404).json({ error: 'Category not found' });
-    }
-    res.json(deletedCategory);
+    await categoryService.deleteCategory(categoryId);
+    res.status(200).json({ message: 'Category deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

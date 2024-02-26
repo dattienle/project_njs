@@ -7,7 +7,7 @@ config();
 const accessTokenValidator = async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization.split(' ')[1];
-    const decodedAccessToken = await verifyToken({ token: accessToken, secretOrPublicKey: process.env.ACCESS_TOKEN_SECRET });
+    const decodedAccessToken = await verifyToken({ token: accessToken, secretOrPublicKey: "anhkiet123" });
     req.decodedAccessToken = decodedAccessToken;
     next();
   } catch (error) {
@@ -18,7 +18,7 @@ const accessTokenValidator = async (req, res, next) => {
 const refreshTokenValidator = async (req, res, next) => {
   try {
     const refreshToken = req.headers.authorization.split(' ')[1] || req.body.refreshToken;
-    const decodedRefreshToken = await verifyToken({ token: refreshToken, secretOrPublicKey: process.env.REFRESH_TOKEN_SECRET });
+    const decodedRefreshToken = await verifyToken({ token: refreshToken, secretOrPublicKey: "anhkiet123" });
     req.decodedRefreshToken = decodedRefreshToken;
 
     const tokenExists = await RefreshToken.exists({ token: refreshToken });
