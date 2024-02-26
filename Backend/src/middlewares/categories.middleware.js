@@ -6,12 +6,17 @@ config();
 
 const accessTokenValidator = async (req, res, next) => {
   try {
+    if (!req.headers.authorization) {
+      return res.status(401).json({ error: 'Unauthorized: Access token is missing' });
+    }
+    
     const accessToken = req.headers.authorization.split(' ')[1];
     const decodedAccessToken = await verifyToken({ token: accessToken, secretOrPublicKey: process.env.ACCESS_TOKEN_SECRET });
     req.decodedAccessToken = decodedAccessToken;
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    console.error('Access token validation error:', error);
+    return res.status(401).json({ error: 'Unauthorized: Access token invalid or expired' });
   }
 };
 

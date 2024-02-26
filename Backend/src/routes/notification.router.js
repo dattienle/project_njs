@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express from 'express';
 import { validateMiddleware } from '../middlewares/validate.middlewares.js';
 import { accessTokenValidator, refreshTokenValidator } from '../middlewares/notification.middleware.js';
 import {
@@ -9,12 +9,12 @@ import {
   deleteNotification,
 } from '../controllers/notification.controller.js';
 
-const notificationRouter = Router();
+const router =  express.Router();
 
-notificationRouter.get('/Getnotifications', accessTokenValidator, refreshTokenValidator, validateMiddleware, getAllNotifications);
-notificationRouter.get('/Getnotifications/:notificationId', accessTokenValidator, refreshTokenValidator, validateMiddleware, getNotificationById);
-notificationRouter.post('/Addnotifications', accessTokenValidator, refreshTokenValidator, validateMiddleware, createNotification);
-notificationRouter.put('/Updatenotifications/:notificationId', accessTokenValidator, refreshTokenValidator, validateMiddleware, updateNotification);
-notificationRouter.delete('/Deletenotifications/:notificationId', accessTokenValidator, refreshTokenValidator, validateMiddleware, deleteNotification);
+router.get('/Getnotifications', accessTokenValidator, refreshTokenValidator, validateMiddleware, getAllNotifications);
+router.get('/Getnotifications/:notificationId', accessTokenValidator, refreshTokenValidator, validateMiddleware, getNotificationById);
+router.post('/Addnotifications', accessTokenValidator, refreshTokenValidator, validateMiddleware, createNotification);
+router.put('/Updatenotifications/:notificationId', accessTokenValidator, refreshTokenValidator, validateMiddleware, updateNotification);
+router.delete('/Deletenotifications/:notificationId', accessTokenValidator, refreshTokenValidator, validateMiddleware, deleteNotification);
 
-export default notificationRouter;
+export default router;

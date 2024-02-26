@@ -1,6 +1,5 @@
 import Notification from '../model/schema/notification.schema.js';
 import { signToken } from '../utils/jwt.js';
-import mongoose from 'mongoose';
 
 class NotificationService {
   
@@ -34,7 +33,6 @@ class NotificationService {
 
   async createNotification(notificationData) {
     try {
-      // Create a new notification
       const newNotification = await Notification.create(notificationData);
       return newNotification;
     } catch (error) {
