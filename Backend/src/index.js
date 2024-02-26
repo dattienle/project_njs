@@ -11,7 +11,7 @@ app.use(express.json())
 app.use('/categories', categoriesRouter);
 app.use('/notifications', notificationRouter);
 
-mongoose.connect("mongodb://datltse160245:letiendat2002@sdn301m.a5pjj2z.mongodb.net/njs", {useMongoClient:true});
+mongoose.connect("mongodb+srv://datltse160245:letiendat2002@sdn301m.a5pjj2z.mongodb.net/njs", {useMongoClient:true});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
